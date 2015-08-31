@@ -55,7 +55,10 @@ cd $dir
 iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 iptables-save
 head="ss://"
-STR=`echo 'rc4-md5:wangtongze.tk@$IP:443' | base64`
+A="rc4-md5:wangtongze.tk@"
+B=":443"
+
+STR=`echo $A$IP$B | base64`
 string=`echo ${STR/Cg==/}`
 #generate the QR code
 web="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="$head$string
