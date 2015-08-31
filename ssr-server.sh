@@ -54,7 +54,14 @@ chmod +x *.sh
 cd $dir
 iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 iptables-save
-
+head="ss://"
+STR=`echo 'rc4-md5:wangtongze.tk@$IP:443' | base64`
+string=`echo ${STR/Cg==/}`
+#generate the QR code
+web="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="$head$string
+echo "===================================================================="
+echo "Get your server QR code on:"
+echo $web
 echo "===================================================================="
 echo "Shadowsocks-RSS server info"
 echo "Server ip: $IP"
