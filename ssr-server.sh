@@ -54,4 +54,16 @@ chmod +x *.sh
 cd $dir
 iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 iptables-save
+
+echo "===================================================================="
+echo "Shadowsocks-RSS server info"
+echo "Server ip: $IP"
+echo "Port: 443"
+echo "Password: wangtongze.tk"
+echo "Method: rc4-md5"
+echo "Local_port: 1080"
+echo "===================================================================="
+echo "If you want to get the lastest client of Shadowsocks-RSS"
+echo "please go to wangtongze.tk"
+echo "===================================================================="
 exit 0
