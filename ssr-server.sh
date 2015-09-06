@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [ `id -u` -ne 0 ] 
 then
   echo "Need root, try with sudo"
@@ -11,8 +11,8 @@ echo "Made by WangTongze WEBSITE: wangtongze.tk"
 echo ""
 
 apt-get update
-apt-get -y install python-pip
-apt-get -y install m2crypto git
+apt-get -y install python-pip openssl
+apt-get -y install python-m2crypto git
 
 
 git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
@@ -54,12 +54,15 @@ chmod +x *.sh
 cd $dir
 iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 iptables-save
+
 head="ss://"
 A="rc4-md5:wangtongze.tk@"
 B=":443"
 
-STR=`echo $A$IP$B | base64`
-string=`echo ${STR/Cg==/}`
+STR=`openssl enc -base64 <<< $A$IP$B`
+#STR=`echo $A$IP$B | base64`
+string=`echo ${STR/o=/==}`
+
 #generate the QR code
 web="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="$head$string
 echo "===================================================================="
@@ -74,6 +77,6 @@ echo "Method: rc4-md5"
 echo "Local_port: 1080"
 echo "===================================================================="
 echo "If you want to get the lastest client of Shadowsocks-RSS"
-echo "please go to wangtongze.tk"
+echo "please go to http://wangtongze.tk"
 echo "===================================================================="
 exit 0
